@@ -1,0 +1,41 @@
+# asdasdasdasd
+# asdasdasd
+# asdasd
+
+""" 
+docStringsss
+"""
+
+def creacionArchivo(nombre):
+    archivo = open(f'{nombre}.txt', 'a', encoding='UTF8')
+    return archivo
+
+try:
+    archivoMain = open('nombres.txt', 'r', encoding='UTF8')
+    for linea in archivoMain:
+        nombreEntero = linea.split()
+        apellido = nombreEntero[1]
+        if apellido[-3:] == 'ian':
+            archivo = creacionArchivo('armenia')
+            archivo.write(apellido + '\n')
+            archivo.close()
+        if apellido[-3:] == 'ini':
+            archivo = creacionArchivo('italia')
+            archivo.write(apellido + '\n')
+            archivo.close()
+            # 234234
+            # 12312
+        if apellido[-2:] == 'ez':
+            archivo = creacionArchivo('espana')
+            archivo.write(apellido + '\n')
+            archivo.close()
+        if apellido[-3:] != 'ian' and apellido[-3:] != 'ini' and apellido[-2:] != 'ez':
+            archivo = creacionArchivo('descartar')
+            archivo.write(apellido + '\n')
+            archivo.close()
+    archivoMain.close()
+except Exception:
+    # rrr
+    # rrr
+    # rrrr
+    print('error')
