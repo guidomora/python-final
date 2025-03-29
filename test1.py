@@ -182,8 +182,74 @@ def ingresoHuespedes():
             archivoHuespedes.write(fechaEgreso + ',')
             cantidad = input('cantidad: ')
             if cantidad.isdigit() and cantidad != '0':
-                archivoHuespedes.write(cantidad + '\n')
+                archivoHuespedes.write(cantidad)
+            archivoHuespedes.write('\n')
+        archivoHuespedes.close()
     except FileNotFoundError:
         print('No se encontro el archivo')
     
-ingresoHuespedes()
+# ingresoHuespedes()
+
+def pisoHabitacion(habitacion):
+    piso = 0
+    if habitacion <= 6:
+        piso = 1
+    if habitacion > 6 and habitacion <= 12:
+        piso = 2
+    if habitacion > 12 and habitacion <= 18:
+        piso = 3
+    if habitacion > 18 and habitacion <= 24 :
+        piso= 4
+    if habitacion > 24 and habitacion <= 30:
+        piso = 5
+    if habitacion > 30 and habitacion <= 36:
+        piso = 6
+    if habitacion > 36 and habitacion <= 42:
+        piso = 7
+    if habitacion > 42 and habitacion <= 48:
+        piso = 8
+    if habitacion > 48 and habitacion <= 54 :
+        piso= 9
+    if habitacion > 54 and habitacion <= 60:
+        piso = 10
+    return piso
+
+def pisoConMasHab(pisosHab):
+    pisos = list(pisosHab.keys())
+    habitaciones = list(pisosHab.values())
+    habsMax = max(habitaciones)
+    print(habsMax)
+    indice = habitaciones.index(habsMax)
+    pisoConMasHabs = pisos[indice]
+    print('piso con mas habitaciones: ', pisoConMasHabs)
+    return pisoConMasHabs
+         
+    
+def habsVacias(pisosHabs):
+    habitaciones = 60
+    ocupadas = list(pisosHabs.values())
+    vacias = habitaciones - sum(ocupadas)
+    print('habitaciones vacias: ', vacias)
+
+import random
+def asignacionHabitaciones():
+    habitaciones = []
+    pisos = {1:0, 2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0}
+    archivoHuespedes = open('huespedes.txt', 'r', encoding='UTF8')
+    archivoHabtaciones = open('habitaciones.txt', 'wt', encoding='UTF8')
+    for huesped in archivoHuespedes:
+        huesped = huesped.split(',')
+        habitacion = random.randint(1,60)
+        while habitacion in habitaciones:
+            habitacion = random.randint(1,60)
+        habitaciones.append(habitacion)
+        piso = pisoHabitacion(habitacion)
+        pisos[piso] +=1
+        hola = f'huesped dni: {huesped[0]}, piso: {piso}, habitacion: {habitacion}' + '\n'
+        archivoHabtaciones.write(hola)
+    pisoConMasHab(pisos)
+    habsVacias(pisos)
+    archivoHuespedes.close()
+    archivoHabtaciones.close()
+        
+asignacionHabitaciones()

@@ -1,0 +1,8 @@
+huesped dni: 12312321, piso: 6, habitacion: 34
+huesped dni: 131231, piso: 10, habitacion: 58
+huesped dni: 122321, piso: 5, habitacion: 27
+huesped dni: 134441231, piso: 4, habitacion: 20
+huesped dni: 121111312321, piso: 8, habitacion: 46
+huesped dni: 13188888231, piso: 4, habitacion: 22
+huesped dni: 19992312321, piso: 5, habitacion: 29
+huesped dni: 1000031231, piso: 1, habitacion: 5
