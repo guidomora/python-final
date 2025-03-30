@@ -262,18 +262,85 @@
 # ---------------------------------------
 # Ej Discord
 
+# def mailValido(mail):
+#     if '@' in mail:
+#         mail = mail.split('@')
+#         if len(mail) > 1:
+#             if mail[0].isalpha() :
+#                 if '.com' in mail[1]:
+#                     return True
+#     print('no valido')
+#     return False
+
+# def detectarPais(paises):
+#     listaPaises = {}
+#     for pais in paises:
+#         if pais not in listaPaises:
+#             listaPaises[pais] = 1
+#         else:
+#             listaPaises[pais] += 1
+#     print(listaPaises)
+#     return listaPaises
+        
+
 # try:
 #     mailFile = open('email.txt', 'r', encoding='UTF8')
 #     paises = []
 #     cantidades = {}
 #     for mail in mailFile:
 #         mail = mail.strip()
-#         if mail[-3:] != 'com':
-#             paises.append(mail[-3:])
-#         if mail[-4:] == '.com':
-#             paises.append('.com')
-#     for pais in paises:
-        
-#     print(paises)    
+#         if mailValido(mail):
+#             if mail[-3:] != 'com':
+#                 paises.append(mail[-2:])
+#             if mail[-4:] == '.com':
+#                 paises.append('us')
+#     print(paises)
+#     detectarPais(paises)    
 # except FileNotFoundError:
 #     print('error')
+
+# ----------------------------------------------
+
+def ordenVotos(votos):
+    votosOrdenados = dict(sorted(votos.items(), key=lambda x: x[1], reverse=True))
+    listaPartidos = list(votosOrdenados.keys())
+    listaVotos = list(votosOrdenados.values())
+    votosTotales = sum(listaVotos)
+    for i in range(len(listaPartidos)):
+        barras = '*' * int(round((listaVotos[i] / votosTotales) * 100, 2) // 2)
+        print(f'{listaPartidos[i]:<25} {barras} {round((listaVotos[i] / votosTotales) * 100, 2)}%')
+    return listaPartidos
+        
+def listaPartidoGanador(archivo, partidoGanador):
+    votosLista = {}
+    for partido in archivo:
+        partido = partido.strip().split(';')
+        if partido[0] == partidoGanador:
+            lista = f'Lista {partido[1]}'
+            if lista not in votosLista:
+                votosLista[f'Lista {partido[1]}'] = 1
+            else:
+                votosLista[f'Lista {partido[1]}'] += 1
+    ordenVotos(votosLista)
+            
+            
+def principal():
+    try:
+        archivoResultados = open('resultados.txt', 'r', encoding='UTF8')
+        votos = {}
+        for voto in archivoResultados:
+            voto = voto.strip().split(';')
+            if voto[0] not in votos:
+                votos[voto[0]] = 1
+            else:
+                votos[voto[0]] += 1
+        ordenPartidos = ordenVotos(votos)
+        archivoResultados.seek(0)
+        print('--------------------------------------')
+        print(f'Partido ganador: {ordenPartidos[0]}')
+        listaPartidoGanador(archivoResultados, ordenPartidos[0])
+        archivoResultados.close()
+    except FileNotFoundError:
+        print('No se encontro el archivo')
+
+principal()
